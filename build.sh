@@ -1,2 +1,3 @@
+rm Compiler
 cmake .
 make
