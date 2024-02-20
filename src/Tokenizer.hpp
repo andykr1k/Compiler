@@ -1,5 +1,3 @@
-#include "Token.hpp"
-
 class Tokenizer{
     public:
         string file_source;
