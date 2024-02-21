@@ -18,9 +18,15 @@ int main() {
         file_contents_stream << input.rdbuf();
         file_contents = file_contents_stream.str();
     }
-
-    vector<Token> tokens = Tokenize(file_contents);
     
+    Tokenizer t;
+    
+    t.file_source = file_contents;
+
+    t.Tokenize();
+    
+    vector<Token> tokens = t.getTokens();
+
     for ( int i = 0; i < tokens.size(); i++){
         cout << tokens[i]._value << endl;
     }

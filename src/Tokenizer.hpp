@@ -1,37 +1,47 @@
 #include "Token.hpp"
 
-class Token(const string src){
+class Tokenizer{
     public:
-        inline vector<Token> Tokenize(const string& str){
+        string file_source;
 
-            vector<Token> tokens;
+        inline void Tokenize(){
             string buf;
 
-            for (int i = 0; i < str.length(); i++) {        
-                if (str[i] != ' '){
-                    buf.push_back(str[i]);
-                } else {
+            while (file_index < file_source.size()) {
+               if (file_source[file_index] == ' ') {
                     tokens.push_back(createToken(buf));
                     buf = "";
-                }
-            }
+                    consume();
+               } else if ( file_source[file_index] == ';') {
+                   tokens.push_back(createToken(buf));
+                   buf = "";
+                   buf.push_back(consume());
+                   tokens.push_back(createToken(buf));
+                   buf = "";
+               } else {
+                    buf.push_back(consume());
+               }
+             }
+        }
 
+        inline vector<Token> getTokens(){
             return tokens;
         }
 
     private:
 
-        string file_source = src;
         int file_index = 0;
+        
+        vector<Token> tokens;
 
-        inline char peak(offet = 1){
+        inline char peak( int offset = 1){
             if (file_index + offset <= file_source.size()) {
-                return src[file_index + offset]; 
+                return file_source[file_index + offset]; 
             }
         }
 
         inline char consume(){
-            return src[file_index++];
+            return file_source[file_index++];
         }
 
         inline Token createToken(const string& buf){
@@ -59,5 +69,4 @@ class Token(const string src){
             }
             return true; 
         }
-
-}
+};
