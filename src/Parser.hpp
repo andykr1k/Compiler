@@ -3,11 +3,18 @@ class Parser{
         vector<Token> tokens;
         
         inline void createASMFile(){
-            file << "   global _start"
+            ofstream ASMFile("outputs/out.asm");
+            
+            ASMFile << ".global _start\n";
+            ASMFile << "_start: ";
+            
             for (int i = 0; i < parsed_asm_contents.size(); i++) {
-                
+               file << parsed_asm_contents[i]; 
             }
+            
+            ASMFile.close();
         }
+
     private:
         inline void parseTokens(){
             for (int i = 0; i < tokens.size(); i++) {
